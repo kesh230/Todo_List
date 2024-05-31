@@ -53,4 +53,19 @@ public class T_Controller {
         service.deletebyId(id);
         return "redirect:todo";
     }
+    @GetMapping("/update-todo")
+    public String update(@RequestParam int id,ModelMap model){
+        Todo todo=service.findbyId(id);
+         model.addAttribute("todo",todo);
+        return "addtodo";
+    }
+    @PostMapping("/update-todo")
+    public String updatetodo(ModelMap model,@Valid Todo todo,BindingResult result){
+        if(result.hasErrors()){
+            return "addtodo";
+        }
+        //  String username=(String)model.get("username");
+         service.updatetodo(todo);
+           return "redirect:todo";
+    }
 }
