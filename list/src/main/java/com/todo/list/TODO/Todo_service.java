@@ -11,17 +11,18 @@ import org.springframework.stereotype.Component;
 
 import jakarta.validation.Valid;
 
-@Component
+// @Component
 public class Todo_service {
 
    private static int count=0;  
    private static List<Todo> todos=new ArrayList<>();
    static{
-        todos.add(new Todo(++count, "jack23", "AWS Practitioner", LocalDate.now().plusYears(1), false));
-        todos.add(new Todo(++count, "ravan23", "Java core", LocalDate.now().plusYears(2), true));
+        todos.add(new Todo(++count, "kesh", "AWS Practitioner 1", LocalDate.now().plusYears(1), false));
+        todos.add(new Todo(++count, "kesh", "Java core 1", LocalDate.now().plusYears(2), true));
    } 
    public List<Todo> findByUsername(String username){
-    return todos;
+   Predicate<? super Todo> predicate=todo->todo.getUsername().equalsIgnoreCase(username);
+    return todos.stream().filter(predicate).toList();
    }
    public void addtodo(String username,String description,LocalDate targetDate,boolean done){
     Todo todo=new Todo(++count, username, description, targetDate, done);
